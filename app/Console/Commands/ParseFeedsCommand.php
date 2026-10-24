@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Post;
 use App\Services\ComputerBaseFeedParser;
 use App\Services\ComputerWeeklyFeedParser;
 use App\Services\PcPerspectiveFeedParser;
@@ -40,6 +41,8 @@ class ParseFeedsCommand extends Command
     {
         $failed = 0;
         $total = 0;
+        $createdTotal = 0;
+        $skippedTotal = 0;
 
         foreach (array_keys(config('feeds', [])) as $name) {
             $class = $this->parsers[$name] ?? null;
@@ -60,6 +63,29 @@ class ParseFeedsCommand extends Command
 
                 foreach ($items as $item) {
                     $this->line('  - '.($item['title'] ?? 'Untitled'));
+
+                    $link = $item['link'] ?? null;
+
+                    if (! $link) {
+                        continue;
+                    }
+
+                    $post = Post::firstOrCreate(
+                        ['link' => $link],
+                        [
+                            'title' => $item['title'] ?? 'Untitled',
+                            'description' => $item['description'] ?? null,
+                            'pub_date' => $item['pubDate'] ?? null,
+                            'image' => $item['image'] ?? null,
+                            'source' => $name,
+                        ]
+                    );
+
+                    if ($post->wasRecentlyCreated) {
+                        $createdTotal++;
+                    } else {
+                        $skippedTotal++;
+                    }
                 }
             } catch (\Throwable $e) {
                 $this->error("{$name}: {$e->getMessage()}");
@@ -68,6 +94,7 @@ class ParseFeedsCommand extends Command
         }
 
         $this->info("Parsed {$total} item(s) in total.");
+        $this->info("Saved {$createdTotal} new post(s); skipped {$skippedTotal} duplicate(s).");
 
         return $failed > 0 ? self::FAILURE : self::SUCCESS;
     }
