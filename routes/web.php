@@ -8,14 +8,18 @@ Route::get('/', function () {
 });
 
 Route::get('/news', function () {
+    $feedName = "Tom's Hardware";
+
     if (config('app.use_local_feeds', false)) {
-        $xml = @file_get_contents(storage_path('app/feeds/toms-hardware.xml'));
+        $localFile = config('feeds.local')[$feedName] ?? 'toms-hardware.xml';
+        $xml = @file_get_contents(storage_path('app/feeds/'.$localFile));
 
         if ($xml === false) {
             abort(500, 'Unable to read local Tom\'s Hardware feed.');
         }
     } else {
-        $response = Http::timeout(15)->get('https://www.tomshardware.com/feeds.xml');
+        $remoteUrl = config('feeds')[$feedName] ?? 'https://www.tomshardware.com/feeds.xml';
+        $response = Http::timeout(15)->get($remoteUrl);
 
         if (! $response->successful()) {
             abort(502, 'Unable to fetch Tom\'s Hardware feed.');

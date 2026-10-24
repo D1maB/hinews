@@ -11,4 +11,17 @@ return [
     'Techgage' => 'https://techgage.com/feed/',
     'PC Perspective' => 'https://pcper.com/feed/',
     'ComputerWeekly' => 'https://www.computerweekly.com/rss',
+
+    'local' => [
+        "Tom's Hardware" => 'toms-hardware.xml',
+        'PCWorld' => 'pcworld.xml',
+        'TechPowerUp' => 'techpowerup.xml',
+        'ServeTheHome' => 'servethehome.xml',
+        'Phoronix' => 'phoronix.xml',
+        'TechSpot' => 'techspot.xml',
+        'ComputerBase' => 'computerbase.xml',
+        'Techgage' => 'techgage.xml',
+        'PC Perspective' => 'pc-perspective.xml',
+        'ComputerWeekly' => 'computerweekly.xml',
+    ],
 ];
