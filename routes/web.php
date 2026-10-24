@@ -59,8 +59,6 @@ Route::get('/news', function () {
             'link' => trim((string) $item->link),
             'description' => trim(strip_tags((string) $item->description)),
             'pubDate' => trim((string) $item->pubDate),
-            'category' => trim((string) $item->category),
-            'author' => trim((string) ($item->author ?? $item->children($namespaces['dc'] ?? [])->creator ?? '')),
             'image' => $image ?: null,
         ];
     }
