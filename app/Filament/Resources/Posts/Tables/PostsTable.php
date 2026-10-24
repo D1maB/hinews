@@ -16,6 +16,7 @@ class PostsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->limit(30)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('link')
