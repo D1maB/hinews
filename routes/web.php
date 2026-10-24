@@ -11,14 +11,14 @@ Route::get('/news', function () {
     $feedName = "Tom's Hardware";
 
     if (config('app.use_local_feeds', false)) {
-        $localFile = config('feeds.local')[$feedName] ?? 'toms-hardware.xml';
+        $localFile = config('feeds')[$feedName]['local'] ?? 'toms-hardware.xml';
         $xml = @file_get_contents(storage_path('app/feeds/'.$localFile));
 
         if ($xml === false) {
             abort(500, 'Unable to read local Tom\'s Hardware feed.');
         }
     } else {
-        $remoteUrl = config('feeds')[$feedName] ?? 'https://www.tomshardware.com/feeds.xml';
+        $remoteUrl = config('feeds')[$feedName]['remote'] ?? 'https://www.tomshardware.com/feeds.xml';
         $response = Http::timeout(15)->get($remoteUrl);
 
         if (! $response->successful()) {
