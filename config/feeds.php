@@ -33,10 +33,6 @@ return [
         'remote' => 'https://techgage.com/feed/',
         'local' => 'techgage.xml',
     ],
-    'ComputerWeekly' => [
-        'remote' => 'https://www.computerweekly.com/rss',
-        'local' => 'computerweekly.xml',
-    ],
     'PC Perspective' => [
         'remote' => 'https://pcper.com/feed/',
         'local' => 'pc-perspective.xml',
