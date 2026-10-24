@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class FeedParser
+class TomsHardwareFeedParser
 {
     public function parseFirst(): array
     {

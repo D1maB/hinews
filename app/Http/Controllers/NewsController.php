@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\FeedParser;
+use App\Services\TomsHardwareFeedParser;
 
 class NewsController extends Controller
 {
-    public function __construct(private FeedParser $feedParser) {}
+    public function __construct(private TomsHardwareFeedParser $feedParser) {}
 
     public function index()
     {
