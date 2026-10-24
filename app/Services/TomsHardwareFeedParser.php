@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class TomsHardwareFeedParser
 {
-    public function parseFirst(): array
+    public function parse(): array
     {
         $feeds = config('feeds', []);
 

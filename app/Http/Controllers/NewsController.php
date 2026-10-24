@@ -10,7 +10,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = $this->feedParser->parseFirst();
+        $news = $this->feedParser->parse();
 
         return response()->json($news);
     }
