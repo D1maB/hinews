@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'use_local_feeds' => env('USE_LOCAL_FEEDS', true),
+
 ];
