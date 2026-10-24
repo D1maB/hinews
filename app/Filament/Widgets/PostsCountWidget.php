@@ -8,6 +8,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class PostsCountWidget extends StatsOverviewWidget
 {
+    protected static bool $isDiscovered = false;
+
     protected function getStats(): array
     {
         return [
