@@ -36,8 +36,6 @@ class DownloadFeedsCommand extends Command
                 continue;
             }
 
-            $target = $directory.DIRECTORY_SEPARATOR.$local;
-
             try {
                 $response = Http::timeout(30)->get($remote);
 
@@ -45,7 +43,7 @@ class DownloadFeedsCommand extends Command
                     throw new \RuntimeException("HTTP {$response->status()}");
                 }
 
-                file_put_contents($target, $response->body());
+                file_put_contents($directory.DIRECTORY_SEPARATOR.$local, $response->body());
                 $this->info("Downloaded {$name} -> {$local}");
             } catch (\Throwable $e) {
                 $this->error("Failed {$name}: {$e->getMessage()}");

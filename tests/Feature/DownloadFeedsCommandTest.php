@@ -9,7 +9,7 @@ class DownloadFeedsCommandTest extends TestCase
 {
     public function test_command_downloads_all_feeds(): void
     {
-        $xml = '<?xml version="1.0"?><rss version="2.0"><channel><title>Feed</title><item><title>Item</title></item></channel></rss>';
+        $xml = '<?xml version="1.0"?><rss version="2.0"><channel><title>Feed</title><item><title>Item</title><link>https://example.com/item</link></item></channel></rss>';
 
         Http::fake([
             '*' => Http::response($xml, 200),
