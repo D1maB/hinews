@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Post;
 use App\Services\ComputerBaseFeedParser;
-use App\Services\ComputerWeeklyFeedParser;
 use App\Services\PcPerspectiveFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\PhoronixFeedParser;
@@ -34,7 +33,6 @@ class ParseFeedsCommand extends Command
         'ComputerBase' => ComputerBaseFeedParser::class,
         'Techgage' => TechgageFeedParser::class,
         'PC Perspective' => PcPerspectiveFeedParser::class,
-        'ComputerWeekly' => ComputerWeeklyFeedParser::class,
     ];
 
     public function handle(): int
