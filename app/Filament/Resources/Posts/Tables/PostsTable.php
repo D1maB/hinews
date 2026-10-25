@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Posts\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -25,8 +24,8 @@ class PostsTable
                 TextColumn::make('source')
                     ->searchable(),
                 TextColumn::make('pub_date'),
-                ImageColumn::make('image'),
             ])
+            ->defaultSort('pub_date', 'desc')
             ->filters([
                 //
             ])
