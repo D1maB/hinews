@@ -8,6 +8,7 @@ use App\Services\PcWorldFeedParser;
 use App\Services\TechPowerUpFeedParser;
 use App\Services\TechSpotFeedParser;
 use App\Services\TomsHardwareFeedParser;
+use App\Services\WccftechFeedParser;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -24,6 +25,7 @@ class ParseFeedsCommand extends Command
         'PCWorld' => PcWorldFeedParser::class,
         'TechPowerUp' => TechPowerUpFeedParser::class,
         'TechSpot' => TechSpotFeedParser::class,
+        'Wccftech' => WccftechFeedParser::class,
         'ComputerBase' => ComputerBaseFeedParser::class,
     ];
 

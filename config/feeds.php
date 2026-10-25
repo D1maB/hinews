@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Wccftech' => [
+        'remote' => 'https://wccftech.com/feed/',
+        'local' => 'wccftech.xml',
+    ],
     "Tom's Hardware" => [
         'remote' => 'https://www.tomshardware.com/feeds.xml',
         'local' => 'toms-hardware.xml',

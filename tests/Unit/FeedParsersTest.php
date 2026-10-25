@@ -7,6 +7,7 @@ use App\Services\PcWorldFeedParser;
 use App\Services\TechPowerUpFeedParser;
 use App\Services\TechSpotFeedParser;
 use App\Services\TomsHardwareFeedParser;
+use App\Services\WccftechFeedParser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -22,6 +23,7 @@ class FeedParsersTest extends TestCase
             'PCWorld' => [PcWorldFeedParser::class],
             'TechPowerUp' => [TechPowerUpFeedParser::class],
             'TechSpot' => [TechSpotFeedParser::class],
+            'Wccftech' => [WccftechFeedParser::class],
             'ComputerBase' => [ComputerBaseFeedParser::class],
         ];
     }
