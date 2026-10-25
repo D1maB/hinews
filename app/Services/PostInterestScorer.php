@@ -16,7 +16,13 @@ class PostInterestScorer
             return null;
         }
 
-        $model = (string) config('ai.providers.ollama.model', 'beam:cloud');
+        $url = config('ai.providers.ollama.url');
+
+        if (! filled($url)) {
+            return null;
+        }
+
+        $model = (string) config('ai.providers.ollama.model', 'tinyllama:latest');
 
         try {
             $response = agent(
