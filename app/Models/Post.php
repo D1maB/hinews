@@ -14,5 +14,6 @@ class Post extends Model
         'image',
         'source',
         'interest_score',
+        'status',
     ];
 }

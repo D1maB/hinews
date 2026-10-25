@@ -100,6 +100,7 @@ class ScoreFeedsCommand extends Command
                     'image' => $item['image'] ?? null,
                     'source' => $item['source'] ?? null,
                     'interest_score' => $score,
+                    'status' => 'new',
                 ]
             );
 
