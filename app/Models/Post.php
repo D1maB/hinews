@@ -13,5 +13,6 @@ class Post extends Model
         'pub_date',
         'image',
         'source',
+        'interest_score',
     ];
 }

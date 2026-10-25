@@ -30,6 +30,9 @@ class PostsTable
                     ->searchable(),
                 TextColumn::make('pub_date')
                     ->sortable(),
+                TextColumn::make('interest_score')
+                    ->label('Interest')
+                    ->sortable(),
             ])
             ->defaultSort('pub_date', 'desc')
             ->filters([
