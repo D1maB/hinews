@@ -54,10 +54,19 @@ class ScoreFeedsCommand extends Command
             }
         }
 
-        // Step 2: prevent duplicates by title across all parsers.
-        $items = $deduplicator->deduplicate($allItems);
+        // Step 2: skip items already stored in the database (by link).
+        $items = array_values(array_filter($allItems, function (array $item): bool {
+            $link = $item['link'] ?? null;
 
-        $this->info('Parsed '.count($allItems).' item(s) in total; '.count($items).' unique by title.');
+            return $link && ! Post::where('link', $link)->exists();
+        }));
+
+        $this->info(count($allItems).' parsed item(s); '.count($items).' new by link.');
+
+        // Step 3: prevent duplicates by title across all parsers.
+        $items = $deduplicator->deduplicate($items);
+
+        $this->info(count($items).' unique by title.');
 
         $saved = 0;
         $skipped = 0;
