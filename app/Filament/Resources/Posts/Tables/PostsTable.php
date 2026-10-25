@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Tables;
 
+use App\Enums\PostStatus;
 use App\Models\Post;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,6 +34,8 @@ class PostsTable
                 TextColumn::make('interest_score')
                     ->label('Interest')
                     ->sortable(),
+                TextColumn::make('status')
+                    ->badge(),
             ])
             ->defaultSort('pub_date', 'desc')
             ->filters([
@@ -43,6 +46,8 @@ class PostsTable
                         ->orderBy('source')
                         ->pluck('source', 'source')
                         ->toArray()),
+                SelectFilter::make('status')
+                    ->options(PostStatus::class),
                 Filter::make('pub_date_day')
                     ->label('Publication date')
                     ->schema([
