@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Post;
 use App\Services\ComputerBaseFeedParser;
-use App\Services\PcPerspectiveFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\ServeTheHomeFeedParser;
 use App\Services\TechPowerUpFeedParser;
@@ -28,7 +27,6 @@ class ParseFeedsCommand extends Command
         'ServeTheHome' => ServeTheHomeFeedParser::class,
         'TechSpot' => TechSpotFeedParser::class,
         'ComputerBase' => ComputerBaseFeedParser::class,
-        'PC Perspective' => PcPerspectiveFeedParser::class,
     ];
 
     public function handle(): int

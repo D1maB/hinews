@@ -25,8 +25,4 @@ return [
         'remote' => 'https://www.computerbase.de/rss/news.xml',
         'local' => 'computerbase.xml',
     ],
-    'PC Perspective' => [
-        'remote' => 'https://pcper.com/feed/',
-        'local' => 'pc-perspective.xml',
-    ],
 ];

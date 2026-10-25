@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Services\ComputerBaseFeedParser;
-use App\Services\PcPerspectiveFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\ServeTheHomeFeedParser;
 use App\Services\TechPowerUpFeedParser;
@@ -26,7 +25,6 @@ class FeedParsersTest extends TestCase
             'ServeTheHome' => [ServeTheHomeFeedParser::class],
             'TechSpot' => [TechSpotFeedParser::class],
             'ComputerBase' => [ComputerBaseFeedParser::class],
-            'PC Perspective' => [PcPerspectiveFeedParser::class],
         ];
     }
 
