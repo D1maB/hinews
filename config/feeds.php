@@ -29,10 +29,6 @@ return [
         'remote' => 'https://www.phoronix.com/rss.php',
         'local' => 'phoronix.xml',
     ],
-    'Techgage' => [
-        'remote' => 'https://techgage.com/feed/',
-        'local' => 'techgage.xml',
-    ],
     'PC Perspective' => [
         'remote' => 'https://pcper.com/feed/',
         'local' => 'pc-perspective.xml',

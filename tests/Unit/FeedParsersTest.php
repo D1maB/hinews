@@ -7,7 +7,6 @@ use App\Services\PcPerspectiveFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\PhoronixFeedParser;
 use App\Services\ServeTheHomeFeedParser;
-use App\Services\TechgageFeedParser;
 use App\Services\TechPowerUpFeedParser;
 use App\Services\TechSpotFeedParser;
 use App\Services\TomsHardwareFeedParser;
@@ -29,7 +28,6 @@ class FeedParsersTest extends TestCase
             'Phoronix' => [PhoronixFeedParser::class],
             'TechSpot' => [TechSpotFeedParser::class],
             'ComputerBase' => [ComputerBaseFeedParser::class],
-            'Techgage' => [TechgageFeedParser::class],
             'PC Perspective' => [PcPerspectiveFeedParser::class],
         ];
     }
