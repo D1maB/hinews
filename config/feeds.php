@@ -13,10 +13,6 @@ return [
         'remote' => 'https://www.techpowerup.com/rss/news',
         'local' => 'techpowerup.xml',
     ],
-    'ServeTheHome' => [
-        'remote' => 'https://www.servethehome.com/feed/',
-        'local' => 'servethehome.xml',
-    ],
     'TechSpot' => [
         'remote' => 'https://www.techspot.com/backend.xml',
         'local' => 'techspot.xml',
