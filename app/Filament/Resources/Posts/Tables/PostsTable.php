@@ -40,17 +40,6 @@ class PostsTable
                         ->orderBy('source')
                         ->pluck('source', 'source')
                         ->toArray()),
-                Filter::make('pub_date_range')
-                    ->label('Publication date range')
-                    ->schema([
-                        DatePicker::make('from')->label('From'),
-                        DatePicker::make('until')->label('Until'),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when($data['from'] ?? null, fn (Builder $q, string $date) => $q->whereRaw("STR_TO_DATE(pub_date, '%a, %d %b %Y') >= ?", [$date]))
-                            ->when($data['until'] ?? null, fn (Builder $q, string $date) => $q->whereRaw("STR_TO_DATE(pub_date, '%a, %d %b %Y') <= ?", [$date]));
-                    }),
                 Filter::make('pub_date_day')
                     ->label('Publication date')
                     ->schema([
