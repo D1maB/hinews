@@ -23,7 +23,8 @@ class PostsTable
                     ->url(fn ($record) => $record->link, shouldOpenInNewTab: true),
                 TextColumn::make('source')
                     ->searchable(),
-                TextColumn::make('pub_date'),
+                TextColumn::make('pub_date')
+                    ->sortable(),
             ])
             ->defaultSort('pub_date', 'desc')
             ->filters([
