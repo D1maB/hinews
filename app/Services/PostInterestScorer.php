@@ -16,7 +16,7 @@ class PostInterestScorer
             return null;
         }
 
-        $model = (string) env('OLLAMA_MODEL', 'beam:cloud');
+        $model = (string) config('ai.providers.ollama.model', 'beam:cloud');
 
         try {
             $response = agent(
