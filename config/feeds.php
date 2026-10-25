@@ -25,10 +25,6 @@ return [
         'remote' => 'https://www.computerbase.de/rss/news.xml',
         'local' => 'computerbase.xml',
     ],
-    'Phoronix' => [
-        'remote' => 'https://www.phoronix.com/rss.php',
-        'local' => 'phoronix.xml',
-    ],
     'PC Perspective' => [
         'remote' => 'https://pcper.com/feed/',
         'local' => 'pc-perspective.xml',
