@@ -47,7 +47,15 @@ abstract class FeedParser
 
         $news = [];
 
-        foreach ($feed->channel->item as $item) {
+        if (isset($feed->channel)) {
+            $entries = $feed->channel->item;
+        } elseif (isset($feed->entry)) {
+            $entries = $feed->entry;
+        } else {
+            $entries = [];
+        }
+
+        foreach ($entries as $item) {
             if (count($news) >= 10) {
                 break;
             }
@@ -65,11 +73,45 @@ abstract class FeedParser
                 $image = (string) ($dc->source ?? '');
             }
 
+            $title = trim((string) $item->title);
+
+            if (isset($item->link['href'])) {
+                $link = trim((string) $item->link['href']);
+            } else {
+                $link = trim((string) $item->link);
+            }
+
+            if (isset($item->description)) {
+                $description = (string) $item->description;
+            } elseif (isset($item->summary)) {
+                $description = (string) $item->summary;
+            } elseif (isset($item->content)) {
+                $description = (string) $item->content;
+            } else {
+                $description = '';
+            }
+
+            if (isset($item->pubDate)) {
+                $pubDate = (string) $item->pubDate;
+            } elseif (isset($item->published)) {
+                $pubDate = (string) $item->published;
+            } elseif (isset($item->updated)) {
+                $pubDate = (string) $item->updated;
+            } else {
+                $pubDate = '';
+            }
+
+            if (! $image && $description !== '') {
+                if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $description, $matches)) {
+                    $image = $matches[1];
+                }
+            }
+
             $news[] = [
-                'title' => trim((string) $item->title),
-                'link' => trim((string) $item->link),
-                'description' => trim(strip_tags((string) $item->description)),
-                'pubDate' => trim((string) $item->pubDate),
+                'title' => $title,
+                'link' => $link,
+                'description' => trim(strip_tags($description)),
+                'pubDate' => trim($pubDate),
                 'image' => $image ?: null,
             ];
         }
