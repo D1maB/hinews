@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Services\ComputerBaseFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\TechPowerUpFeedParser;
 use App\Services\TechSpotFeedParser;
@@ -24,7 +23,6 @@ class FeedParsersTest extends TestCase
             'TechPowerUp' => [TechPowerUpFeedParser::class],
             'TechSpot' => [TechSpotFeedParser::class],
             'Wccftech' => [WccftechFeedParser::class],
-            'ComputerBase' => [ComputerBaseFeedParser::class],
         ];
     }
 

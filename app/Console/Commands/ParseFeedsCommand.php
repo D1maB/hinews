@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
-use App\Services\ComputerBaseFeedParser;
 use App\Services\PcWorldFeedParser;
 use App\Services\TechPowerUpFeedParser;
 use App\Services\TechSpotFeedParser;
@@ -26,7 +25,6 @@ class ParseFeedsCommand extends Command
         'TechPowerUp' => TechPowerUpFeedParser::class,
         'TechSpot' => TechSpotFeedParser::class,
         'Wccftech' => WccftechFeedParser::class,
-        'ComputerBase' => ComputerBaseFeedParser::class,
     ];
 
     public function handle(): int

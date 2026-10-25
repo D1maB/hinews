@@ -21,8 +21,4 @@ return [
         'remote' => 'https://www.techspot.com/backend.xml',
         'local' => 'techspot.xml',
     ],
-    'ComputerBase' => [
-        'remote' => 'https://www.computerbase.de/rss/news.xml',
-        'local' => 'computerbase.xml',
-    ],
 ];
