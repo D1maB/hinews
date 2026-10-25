@@ -160,3 +160,9 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Run `vendor/bin/sail bin phpunit` to call the test runner directly. It accepts the same file path and `--filter=testName` arguments.
 
 </laravel-boost-guidelines>
+
+# Custom Rules
+
+- Make separate commits for unrelated changes; do not bundle them into one commit.
+- Do not add Claude Code (or any other tool) as a co-author in commit messages.
+- Use conventional commit prefixes (`feat:`, `fix:`, `chore:`, etc.) consistent with recent project history.
