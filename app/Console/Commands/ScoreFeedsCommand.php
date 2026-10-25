@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\PostStatus;
 use App\Models\Post;
 use App\Services\PostInterestScorer;
 use App\Services\TitleDeduplicator;
@@ -100,7 +101,7 @@ class ScoreFeedsCommand extends Command
                     'image' => $item['image'] ?? null,
                     'source' => $item['source'] ?? null,
                     'interest_score' => $score,
-                    'status' => 'new',
+                    'status' => PostStatus::New,
                 ]
             );
 

@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $casts = [
+        'status' => PostStatus::class,
+    ];
+
     protected $fillable = [
         'title',
         'link',
