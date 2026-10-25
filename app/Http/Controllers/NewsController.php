@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\TomsHardwareFeedParser;
+use App\Services\Feeds\TomsHardwareFeedParser;
 
 class NewsController extends Controller
 {

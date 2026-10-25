@@ -1,10 +1,10 @@
 <?php
 
-use App\Services\PcWorldFeedParser;
-use App\Services\TechPowerUpFeedParser;
-use App\Services\TechSpotFeedParser;
-use App\Services\TomsHardwareFeedParser;
-use App\Services\WccftechFeedParser;
+use App\Services\Feeds\PcWorldFeedParser;
+use App\Services\Feeds\TechPowerUpFeedParser;
+use App\Services\Feeds\TechSpotFeedParser;
+use App\Services\Feeds\TomsHardwareFeedParser;
+use App\Services\Feeds\WccftechFeedParser;
 
 return [
     'Wccftech' => [

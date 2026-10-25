@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
-use App\Services\PostInterestScorer;
+use App\Services\Scoring\PostInterestScorer;
 use Illuminate\Console\Command;
 
 class ScorePostsCommand extends Command

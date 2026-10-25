@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Enums\PostStatus;
 use App\Models\Post;
-use App\Services\PostInterestScorer;
+use App\Services\Scoring\PostInterestScorer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +14,8 @@ class ScoreFeedsCommandTest extends TestCase
 
     public function test_command_saves_scored_posts_as_new(): void
     {
-        $scorer = new class extends PostInterestScorer {
+        $scorer = new class extends PostInterestScorer
+        {
             public function score(string $title): ?int
             {
                 return 99;

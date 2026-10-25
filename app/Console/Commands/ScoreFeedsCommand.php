@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Services\PostInterestScorer;
-use App\Services\PostRepository;
-use App\Services\TitleDeduplicator;
+use App\Services\Deduplication\TitleDeduplicator;
+use App\Services\Persistence\PostRepository;
+use App\Services\Scoring\PostInterestScorer;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;

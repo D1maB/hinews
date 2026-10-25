@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Enums\PostStatus;
 use App\Models\Post;
-use App\Services\PostRepository;
+use App\Services\Persistence\PostRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +14,7 @@ class PostRepositoryTest extends TestCase
 
     public function test_exists_by_link(): void
     {
-        $repository = new PostRepository();
+        $repository = new PostRepository;
 
         $this->assertFalse($repository->existsByLink('https://example.com/missing'));
 
@@ -25,7 +25,7 @@ class PostRepositoryTest extends TestCase
 
     public function test_save_scored_creates_post_with_new_status(): void
     {
-        $repository = new PostRepository();
+        $repository = new PostRepository;
 
         $post = $repository->saveScored([
             'title' => 'Scored title',

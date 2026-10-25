@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Services\TitleDeduplicator;
+use App\Services\Deduplication\TitleDeduplicator;
 use Tests\TestCase;
 
 class TitleDeduplicatorTest extends TestCase
 {
     public function test_duplicates_are_removed_by_title(): void
     {
-        $deduplicator = new TitleDeduplicator();
+        $deduplicator = new TitleDeduplicator;
 
         $items = [
             ['title' => 'Alpha', 'link' => 'https://a'],
@@ -25,7 +25,7 @@ class TitleDeduplicatorTest extends TestCase
 
     public function test_empty_and_blank_titles_are_skipped(): void
     {
-        $deduplicator = new TitleDeduplicator();
+        $deduplicator = new TitleDeduplicator;
 
         $items = [
             ['title' => '', 'link' => 'https://a'],

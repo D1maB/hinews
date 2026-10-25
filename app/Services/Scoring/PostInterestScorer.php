@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Scoring;
 
 use Illuminate\JsonSchema\JsonSchema;
 

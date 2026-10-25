@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Services\TomsHardwareFeedParser;
+use App\Services\Feeds\TomsHardwareFeedParser;
 use Tests\TestCase;
 
 class TomsHardwareFeedParserTest extends TestCase

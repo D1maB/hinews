@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Persistence;
 
 use App\Enums\PostStatus;
 use App\Models\Post;
