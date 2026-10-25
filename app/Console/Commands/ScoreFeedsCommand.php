@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\PostStatus;
-use App\Models\Post;
 use App\Services\PostInterestScorer;
+use App\Services\PostRepository;
 use App\Services\TitleDeduplicator;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
@@ -17,7 +16,7 @@ class ScoreFeedsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PostInterestScorer $scorer, TitleDeduplicator $deduplicator): int
+    public function handle(PostInterestScorer $scorer, TitleDeduplicator $deduplicator, PostRepository $posts): int
     {
         $failed = 0;
         $allItems = [];
@@ -56,10 +55,8 @@ class ScoreFeedsCommand extends Command
         }
 
         // Step 2: skip items already stored in the database (by link).
-        $items = array_values(array_filter($allItems, function (array $item): bool {
-            $link = $item['link'] ?? null;
-
-            return $link && ! Post::where('link', $link)->exists();
+        $items = array_values(array_filter($allItems, function (array $item) use ($posts): bool {
+            return ! $posts->existsByLink($item['link'] ?? null);
         }));
 
         $this->info(count($allItems).' parsed item(s); '.count($items).' new by link.');
@@ -92,18 +89,7 @@ class ScoreFeedsCommand extends Command
                 continue;
             }
 
-            Post::updateOrCreate(
-                ['link' => $link],
-                [
-                    'title' => $title,
-                    'description' => $item['description'] ?? null,
-                    'pub_date' => $item['pubDate'] ?? null,
-                    'image' => $item['image'] ?? null,
-                    'source' => $item['source'] ?? null,
-                    'interest_score' => $score,
-                    'status' => PostStatus::New,
-                ]
-            );
+            $posts->saveScored($item, $score);
 
             $this->line("    saved (score: {$score})");
             $saved++;
