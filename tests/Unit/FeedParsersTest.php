@@ -2,11 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Services\PcWorldFeedParser;
-use App\Services\TechPowerUpFeedParser;
-use App\Services\TechSpotFeedParser;
-use App\Services\TomsHardwareFeedParser;
-use App\Services\WccftechFeedParser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -17,13 +12,17 @@ class FeedParsersTest extends TestCase
      */
     public static function parsers(): array
     {
-        return [
-            'Tom\'s Hardware' => [TomsHardwareFeedParser::class],
-            'PCWorld' => [PcWorldFeedParser::class],
-            'TechPowerUp' => [TechPowerUpFeedParser::class],
-            'TechSpot' => [TechSpotFeedParser::class],
-            'Wccftech' => [WccftechFeedParser::class],
-        ];
+        $parsers = [];
+
+        $feeds = require __DIR__.'/../../config/feeds.php';
+
+        foreach ($feeds as $name => $feedConfig) {
+            if (is_array($feedConfig) && isset($feedConfig['parser'])) {
+                $parsers[$name] = [$feedConfig['parser']];
+            }
+        }
+
+        return $parsers;
     }
 
     #[DataProvider('parsers')]

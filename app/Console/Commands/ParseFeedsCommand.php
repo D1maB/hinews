@@ -3,11 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
-use App\Services\PcWorldFeedParser;
-use App\Services\TechPowerUpFeedParser;
-use App\Services\TechSpotFeedParser;
-use App\Services\TomsHardwareFeedParser;
-use App\Services\WccftechFeedParser;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -16,17 +11,6 @@ use Illuminate\Console\Command;
 #[Description('Parse all configured RSS feeds.')]
 class ParseFeedsCommand extends Command
 {
-    /**
-     * @var array<string, string>
-     */
-    private array $parsers = [
-        "Tom's Hardware" => TomsHardwareFeedParser::class,
-        'PCWorld' => PcWorldFeedParser::class,
-        'TechPowerUp' => TechPowerUpFeedParser::class,
-        'TechSpot' => TechSpotFeedParser::class,
-        'Wccftech' => WccftechFeedParser::class,
-    ];
-
     public function handle(): int
     {
         $failed = 0;
@@ -34,10 +18,17 @@ class ParseFeedsCommand extends Command
         $createdTotal = 0;
         $skippedTotal = 0;
 
-        foreach (array_keys(config('feeds', [])) as $name) {
-            $class = $this->parsers[$name] ?? null;
+        foreach (config('feeds', []) as $name => $feedConfig) {
+            if (! is_array($feedConfig)) {
+                $this->warn("No feed configuration for {$name}.");
+                $failed++;
 
-            if ($class === null) {
+                continue;
+            }
+
+            $class = $feedConfig['parser'] ?? null;
+
+            if (! is_string($class) || ! class_exists($class)) {
                 $this->warn("No parser registered for {$name}.");
                 $failed++;
 
