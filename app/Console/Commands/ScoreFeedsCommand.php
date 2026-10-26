@@ -114,7 +114,8 @@ class ScoreFeedsCommand extends Command
         $base = now('UTC')->startOfHour();
 
         if ($lastScheduled !== null && $lastScheduled->scheduled_at !== null && $lastScheduled->scheduled_at->isFuture()) {
-            $base = $lastScheduled->scheduled_at->copy()->startOfHour()->addHour();
+            $last = $lastScheduled->scheduled_at;
+            $base = $last->copy()->addMinutes(20 - ($last->minute % 20))->startOfSecond();
         }
 
         foreach ($newPosts as $index => $post) {
@@ -129,7 +130,7 @@ class ScoreFeedsCommand extends Command
 
             $post->update([
                 'status' => PostStatus::Scheduled->value,
-                'scheduled_at' => $base->copy()->addHours($index)->addMinutes(random_int(0, 59))->addSeconds(random_int(0, 59)),
+                'scheduled_at' => $base->copy()->addMinutes(20 * $index)->addMinutes(random_int(0, 19))->addSeconds(random_int(0, 59)),
             ]);
         }
 
