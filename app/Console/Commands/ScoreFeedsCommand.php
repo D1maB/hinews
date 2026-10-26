@@ -128,6 +128,7 @@ class ScoreFeedsCommand extends Command
             }
 
             $post->update([
+                'status' => PostStatus::Scheduled->value,
                 'scheduled_at' => $base->copy()->addHours($index),
             ]);
         }

@@ -27,6 +27,6 @@ class ScoreFeedsCommandTest extends TestCase
         $this->artisan('feeds:score')->assertExitCode(0);
 
         $this->assertGreaterThan(0, Post::count());
-        $this->assertTrue(Post::where('status', PostStatus::New->value)->exists());
+        $this->assertTrue(Post::where('status', PostStatus::Scheduled->value)->exists());
     }
 }
