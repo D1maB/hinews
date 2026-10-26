@@ -31,6 +31,9 @@ class PostsTable
                     ->searchable(),
                 TextColumn::make('pub_date')
                     ->sortable(),
+                TextColumn::make('scheduled_at')
+                    ->dateTime()
+                    ->sortable(),
                 TextColumn::make('interest_score')
                     ->label('Interest')
                     ->sortable(),

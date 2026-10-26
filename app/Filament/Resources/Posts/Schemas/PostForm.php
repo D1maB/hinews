@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Posts\Schemas;
 
 use App\Enums\PostStatus;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -26,6 +27,9 @@ class PostForm
                 TextInput::make('image')
                     ->url(),
                 TextInput::make('source'),
+                DateTimePicker::make('scheduled_at'),
+                TextInput::make('interest_score')
+                    ->numeric(),
                 Select::make('status')
                     ->options(PostStatus::class)
                     ->required(),
