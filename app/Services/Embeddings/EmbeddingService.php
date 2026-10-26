@@ -8,7 +8,7 @@ class EmbeddingService
 {
     public function __construct(
         protected string $provider = 'ollama',
-        protected string $model = 'nomic-embed-text',
+        protected string $model = 'nomic-embed-text:v1.5',
     ) {}
 
     /**
