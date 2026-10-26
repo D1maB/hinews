@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PostStatus;
+use Illuminate\Database\Eloquent\Casts\AsVector;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -11,7 +12,7 @@ class Post extends Model
         'status' => PostStatus::class,
         'scheduled_at' => 'datetime',
         'published_at' => 'datetime',
-        'embedding' => 'array',
+        'embedding' => AsVector::class,
     ];
 
     protected $fillable = [
