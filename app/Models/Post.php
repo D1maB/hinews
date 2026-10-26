@@ -11,6 +11,7 @@ class Post extends Model
         'status' => PostStatus::class,
         'scheduled_at' => 'datetime',
         'published_at' => 'datetime',
+        'embedding' => 'array',
     ];
 
     protected $fillable = [
@@ -26,5 +27,6 @@ class Post extends Model
         'published_at',
         'x_id',
         'telegram_id',
+        'embedding',
     ];
 }

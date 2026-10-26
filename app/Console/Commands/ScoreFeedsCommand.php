@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\PostStatus;
 use App\Models\Post;
 use App\Services\Deduplication\TitleDeduplicator;
+use App\Services\Embeddings\EmbeddingService;
 use App\Services\Persistence\PostRepository;
 use App\Services\Scoring\PostInterestScorer;
 use Illuminate\Console\Attributes\Description;
@@ -18,10 +19,11 @@ class ScoreFeedsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PostInterestScorer $scorer, TitleDeduplicator $deduplicator, PostRepository $posts): int
+    public function handle(PostInterestScorer $scorer, PostRepository $posts, EmbeddingService $embeddings): int
     {
         $failed = 0;
         $allItems = [];
+        $deduplicator = new TitleDeduplicator($embeddings);
 
         // Step 1: parse XML from all configured feeds into one merged collection.
         foreach (config('feeds', []) as $name => $feedConfig) {
@@ -82,6 +84,21 @@ class ScoreFeedsCommand extends Command
                 continue;
             }
 
+            $embedding = $embeddings->generate((string) $title);
+
+            $existingEmbeddings = Post::query()
+                ->whereNotNull('embedding')
+                ->pluck('embedding')
+                ->map(fn ($value) => ['embedding' => is_array($value) ? $value : json_decode((string) $value, true)])
+                ->all();
+
+            if ($embedding !== null && $embeddings->isDuplicate($embedding, $existingEmbeddings, 0.9)) {
+                $this->line('    skipped (duplicate)');
+                $skipped++;
+
+                continue;
+            }
+
             $score = $scorer->score((string) $title);
 
             if ($score === null || $score <= 80) {
@@ -91,7 +108,7 @@ class ScoreFeedsCommand extends Command
                 continue;
             }
 
-            $posts->saveScored($item, $score);
+            $posts->saveScored($item, $score, $embedding);
 
             $this->line("    saved (score: {$score})");
             $saved++;

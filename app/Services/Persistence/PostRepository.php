@@ -16,7 +16,7 @@ class PostRepository
         return Post::where('link', $link)->exists();
     }
 
-    public function saveScored(array $item, int $score): Post
+    public function saveScored(array $item, int $score, ?array $embedding = null): Post
     {
         return Post::updateOrCreate(
             ['link' => $item['link']],
@@ -27,6 +27,7 @@ class PostRepository
                 'image' => $item['image'] ?? null,
                 'source' => $item['source'] ?? null,
                 'interest_score' => $score,
+                'embedding' => $embedding,
                 'status' => PostStatus::New,
             ]
         );
