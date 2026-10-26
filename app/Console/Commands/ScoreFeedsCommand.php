@@ -115,11 +115,13 @@ class ScoreFeedsCommand extends Command
 
         if ($lastScheduled !== null && $lastScheduled->scheduled_at !== null && $lastScheduled->scheduled_at->isFuture()) {
             $last = $lastScheduled->scheduled_at;
-            $base = $last->copy()->addMinutes(20 - ($last->minute % 20))->startOfSecond();
+            $base = $last->copy()->addMinutes(30 - ($last->minute % 30))->startOfSecond();
         }
 
+        $limit = 24;
+
         foreach ($newPosts as $index => $post) {
-            if ($index >= 12) {
+            if ($index >= $limit) {
                 $post->update([
                     'status' => PostStatus::Trash->value,
                     'scheduled_at' => null,
@@ -130,11 +132,11 @@ class ScoreFeedsCommand extends Command
 
             $post->update([
                 'status' => PostStatus::Scheduled->value,
-                'scheduled_at' => $base->copy()->addMinutes(20 * $index)->addMinutes(random_int(0, 19))->addSeconds(random_int(0, 59)),
+                'scheduled_at' => $base->copy()->addMinutes(30 * $index)->addMinutes(random_int(0, 29))->addSeconds(random_int(0, 59)),
             ]);
         }
 
-        $this->info('Scheduled '.min($newPosts->count(), 12).' post(s); trashed '.max($newPosts->count() - 12, 0).' overflow post(s).');
+        $this->info('Scheduled '.min($newPosts->count(), 24).' post(s); trashed '.max($newPosts->count() - 24, 0).' overflow post(s).');
 
         return $failed > 0 ? self::FAILURE : self::SUCCESS;
     }
