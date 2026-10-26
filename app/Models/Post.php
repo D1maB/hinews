@@ -24,5 +24,7 @@ class Post extends Model
         'status',
         'scheduled_at',
         'published_at',
+        'x_id',
+        'telegram_id',
     ];
 }
