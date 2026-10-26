@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\PostStatus;
+use App\Models\Post;
 use App\Services\Deduplication\TitleDeduplicator;
 use App\Services\Persistence\PostRepository;
 use App\Services\Scoring\PostInterestScorer;
@@ -96,6 +98,41 @@ class ScoreFeedsCommand extends Command
         }
 
         $this->info("Saved {$saved} post(s); skipped {$skipped} (score <= 80 or unscored).");
+
+        // Step 4: schedule new posts one per hour; overflow becomes trash.
+        $newPosts = Post::query()
+            ->where('status', PostStatus::New->value)
+            ->orderByDesc('interest_score')
+            ->orderBy('id')
+            ->get();
+
+        $lastScheduled = Post::query()
+            ->whereNotNull('scheduled_at')
+            ->orderByDesc('scheduled_at')
+            ->first();
+
+        $base = now('UTC')->startOfHour();
+
+        if ($lastScheduled !== null && $lastScheduled->scheduled_at !== null && $lastScheduled->scheduled_at->isFuture()) {
+            $base = $lastScheduled->scheduled_at->copy()->startOfHour()->addHour();
+        }
+
+        foreach ($newPosts as $index => $post) {
+            if ($index >= 12) {
+                $post->update([
+                    'status' => PostStatus::Trash->value,
+                    'scheduled_at' => null,
+                ]);
+
+                continue;
+            }
+
+            $post->update([
+                'scheduled_at' => $base->copy()->addHours($index),
+            ]);
+        }
+
+        $this->info('Scheduled '.min($newPosts->count(), 12).' post(s); trashed '.max($newPosts->count() - 12, 0).' overflow post(s).');
 
         return $failed > 0 ? self::FAILURE : self::SUCCESS;
     }
