@@ -25,7 +25,7 @@ class PostsTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('link')
-                    ->limit(50)
+                    ->limit(30)
                     ->url(fn ($record) => $record->link, shouldOpenInNewTab: true),
                 TextColumn::make('source')
                     ->searchable(),
