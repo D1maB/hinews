@@ -86,8 +86,12 @@ class ScoreFeedsCommand extends Command
 
             $score = $scorer->score((string) $title);
 
-            if ($score === null || $score <= 80) {
-                $this->line('    skipped (score: '.($score === null ? 'n/a' : $score).')');
+            if ($score === null) {
+                throw new \RuntimeException('Could not score: '.$title);
+            }
+
+            if ($score <= 80) {
+                $this->line('    skipped (score: '.$score.')');
                 $skipped++;
 
                 continue;
