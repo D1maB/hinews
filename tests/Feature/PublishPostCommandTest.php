@@ -14,6 +14,12 @@ class PublishPostCommandTest extends TestCase
 
     public function test_publishes_ready_post_and_stores_social_ids(): void
     {
+        config([
+            'services.x.bearer_token' => 'token',
+            'services.telegram.bot_token' => 'bot-token',
+            'services.telegram.chat_id' => 'chat-1',
+        ]);
+
         Http::fake([
             '*' => Http::response(['data' => ['id' => 'x-1'], 'result' => ['message_id' => 9]], 200),
         ]);

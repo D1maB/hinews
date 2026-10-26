@@ -4,6 +4,7 @@ namespace App\Services\Social;
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class XPoster
 {
@@ -19,18 +20,38 @@ class XPoster
 
     public function post(Post $post): ?string
     {
-        $response = Http::withToken((string) $this->bearerToken)
+        if (blank($this->bearerToken)) {
+            Log::error('X posting skipped: missing bearer token.');
+
+            return null;
+        }
+
+        $response = Http::retry(3, 200, throw: false)
+            ->withToken((string) $this->bearerToken)
             ->post($this->endpoint, [
                 'text' => $this->textFor($post),
             ]);
 
         if (! $response->successful()) {
+            Log::error('X posting failed.', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
             return null;
         }
 
         $id = $response->json('data.id');
 
-        return is_scalar($id) ? (string) $id : null;
+        if (! is_scalar($id)) {
+            Log::error('X posting failed: missing post id in response.', [
+                'body' => $response->body(),
+            ]);
+
+            return null;
+        }
+
+        return (string) $id;
     }
 
     public function publish(Post $post): ?string
