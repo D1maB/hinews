@@ -10,7 +10,7 @@ use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 
 #[Signature('feeds:score')]
-#[Description('Parse all configured RSS feeds, deduplicate by title, score posts with AI, and save posts with a score above 50.')]
+#[Description('Parse all configured RSS feeds, deduplicate by title, score posts with AI, and save posts with a score above 80.')]
 class ScoreFeedsCommand extends Command
 {
     /**
@@ -82,7 +82,7 @@ class ScoreFeedsCommand extends Command
 
             $score = $scorer->score((string) $title);
 
-            if ($score === null || $score <= 50) {
+            if ($score === null || $score <= 80) {
                 $this->line('    skipped (score: '.($score === null ? 'n/a' : $score).')');
                 $skipped++;
 
@@ -95,7 +95,7 @@ class ScoreFeedsCommand extends Command
             $saved++;
         }
 
-        $this->info("Saved {$saved} post(s); skipped {$skipped} (score <= 50 or unscored).");
+        $this->info("Saved {$saved} post(s); skipped {$skipped} (score <= 80 or unscored).");
 
         return $failed > 0 ? self::FAILURE : self::SUCCESS;
     }
