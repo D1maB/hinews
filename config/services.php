@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'x' => [
+        'bearer_token' => env('X_BEARER_TOKEN'),
+        'endpoint' => env('X_API_ENDPOINT', 'https://api.twitter.com/2/tweets'),
+    ],
+
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id' => env('TELEGRAM_CHAT_ID'),
+        'endpoint' => env('TELEGRAM_API_ENDPOINT', 'https://api.telegram.org'),
+    ],
+
 ];
