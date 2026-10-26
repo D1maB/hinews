@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Http;
 
 class TelegramPoster
 {
+    use FormatsSocialPost;
+
     public function __construct(
         protected ?string $botToken = null,
         protected ?string $chatId = null,
@@ -49,12 +51,5 @@ class TelegramPoster
         $base = rtrim((string) $this->endpoint, '/');
 
         return "{$base}/bot{$this->botToken}/sendMessage";
-    }
-
-    protected function textFor(Post $post): string
-    {
-        $lines = array_filter([$post->title, $post->description, $post->link]);
-
-        return implode("\n", $lines);
     }
 }

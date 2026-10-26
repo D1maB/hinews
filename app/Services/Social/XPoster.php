@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Http;
 
 class XPoster
 {
+    use FormatsSocialPost;
+
     public function __construct(
         protected ?string $bearerToken = null,
         protected ?string $endpoint = null,
@@ -39,12 +41,5 @@ class XPoster
     public function send(Post $post): ?string
     {
         return $this->post($post);
-    }
-
-    protected function textFor(Post $post): string
-    {
-        $lines = array_filter([$post->title, $post->description, $post->link]);
-
-        return implode("\n", $lines);
     }
 }
