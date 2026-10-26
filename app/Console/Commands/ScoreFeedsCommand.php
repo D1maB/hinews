@@ -84,25 +84,19 @@ class ScoreFeedsCommand extends Command
                 continue;
             }
 
-            $embedding = $embeddings->generate((string) $title);
+            $score = $scorer->score((string) $title);
 
-            $existingEmbeddings = Post::query()
-                ->whereNotNull('embedding')
-                ->pluck('embedding')
-                ->map(fn ($value) => ['embedding' => is_array($value) ? $value : json_decode((string) $value, true)])
-                ->all();
-
-            if ($embedding !== null && $embeddings->isDuplicate($embedding, $existingEmbeddings, 0.9)) {
-                $this->line('    skipped (duplicate)');
+            if ($score === null || $score <= 80) {
+                $this->line('    skipped (score: '.($score === null ? 'n/a' : $score).')');
                 $skipped++;
 
                 continue;
             }
 
-            $score = $scorer->score((string) $title);
+            $embedding = $embeddings->generate((string) $title);
 
-            if ($score === null || $score <= 80) {
-                $this->line('    skipped (score: '.($score === null ? 'n/a' : $score).')');
+            if ($embedding !== null && Post::query()->whereVectorSimilarTo('embedding', $embedding, minSimilarity: 0.9)->exists()) {
+                $this->line('    skipped (duplicate)');
                 $skipped++;
 
                 continue;
