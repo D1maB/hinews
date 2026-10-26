@@ -9,6 +9,8 @@ class Post extends Model
 {
     protected $casts = [
         'status' => PostStatus::class,
+        'scheduled_at' => 'datetime',
+        'published_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -20,5 +22,7 @@ class Post extends Model
         'source',
         'interest_score',
         'status',
+        'scheduled_at',
+        'published_at',
     ];
 }
